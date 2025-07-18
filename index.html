@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Script AI Roblox</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    pre {
+      background: #1e1e1e;
+      padding: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Gerador de Scripts Roblox</h1>
+  <textarea id="prompt" placeholder="Descreva seu script Roblox aqui..."></textarea>
+  <button onclick="gerarScript()">Gerar Script</button>
+  <h2>🧾 Resultado:</h2>
+  <pre id="resultado">...</pre>
+
+  <script>
+    async function gerarScript() {
+      const prompt = document.getElementById("prompt").value;
+      const resultado = document.getElementById("resultado");
+      resultado.textContent = "⏳ Gerando script...";
+      try {
+        const resposta = await fetch("https://api12-mu.vercel.app/api/script", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ prompt })
+        });
+
+        const json = await resposta.json();
+        resultado.textContent = json.script || "❌ Erro: Resposta vazia.";
+      } catch (erro) {
+        resultado.textContent = "❌ Erro ao conectar com a API.";
+      }
+    }
+  </script>
+</body>
+</html>
